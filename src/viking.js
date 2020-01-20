@@ -27,10 +27,10 @@ Viking.prototype.constructor = Viking;
 Viking.prototype.receiveDamage = function (damage) {
     this.health -= damage; 
     if (this.health <= 0){
-            return `${this.name} has died in act of combat`
+            return `${this.name} has died in act of combat`;
     }
     else if (this.health > 0) {
-            return `${this.name} has received ${damage} points of damage`
+            return `${this.name} has received ${damage} points of damage`;
     }
 };
 
@@ -48,13 +48,17 @@ function Saxon(health, strength) {
 Saxon.prototype = Object.create(Soldier.prototype);
 Saxon.prototype.constructor = Saxon;
 
+Saxon.prototype.attack = function () { 
+    return this.strength;
+};
+
 Saxon.prototype.receiveDamage = function (damage) {
     this.health -= damage; 
     if (this.health <= 0){
-            return `A Saxon has died in combat`
+            return `A Saxon has died in combat`;
     }
     else if (this.health > 0) {
-            return `A Saxon has received ${damage} points of damage`
+            return `A Saxon has received ${damage} points of damage`;
     }
 };
 
@@ -75,23 +79,22 @@ War.prototype.addSaxon = function (saxon) {
 };
 
 War.prototype.vikingAttack = function (){
-    let attackDamage = Viking.strength;
-    this.saxonArmy.pop(saxon);
-    return Saxon.receiveDamage(attackDamage);
+    const randomSaxon = Math.floor(Math.random() * this.saxonArmy.length); // Math.floor rounds down
+    const saxonSoldier = this.saxonArmy(randomSaxon);
+    }
 };
 
-War.prototype.saxonAttack = function (){
-    let attackDamage = Saxon.strength;
-    this.vikingArmy.pop(viking);
-    return Viking.receiveDamage(attackDamage);
+
+War.prototype.saxonAttack = function (){  //same as above
+    
 };
 
-War.prototype.showStatus = function () {
-    if (this.saxonArmy === 0) {
+War.prototype.showStatus = function () {  /// uncomment Jasmine and check if this is correct
+    if (this.saxonArmy.length === 0) {
         console.log("Vikings have won the war of the century!");
-    } else if (this.vikingArmy === 0) {
+    } else if (this.vikingArmy.length === 0) {
         console.log("Saxons have fought for their lives and survive another day...");
-    } else if (this.saxonArmy > 0 && this.vikingArmy > 0) {
+    } else if (this.saxonArmy.length > 0 && this.vikingArmy.length > 0) {
         console.log("Vikings and Saxons are still in the thick of battle.");
     }
 };
