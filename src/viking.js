@@ -80,8 +80,19 @@ War.prototype.addSaxon = function (saxon) {
 
 War.prototype.vikingAttack = function (){
     const randomSaxon = Math.floor(Math.random() * this.saxonArmy.length); // Math.floor rounds down
-    const saxonSoldier = this.saxonArmy(randomSaxon);
+    const saxonSoldier = this.saxonArmy[randomSaxon];
+    
+    const randomViking = Math.floor(Math.random() * this.vikingArmy.length);
+    const vikingSoldier = this.vikingArmy[randomViking];
+
+    const result = saxonSoldier.receiveDamage(vikingSoldier.attack());
+
+    // If random Saxon soldier health is below zero, remove him from the Saxon army
+    if (saxonSoldier.health <= 0) {
+        this.saxonArmy.splice(randomSaxon, 1);
     }
+
+  return result;
 };
 
 
@@ -91,10 +102,10 @@ War.prototype.saxonAttack = function (){  //same as above
 
 War.prototype.showStatus = function () {  /// uncomment Jasmine and check if this is correct
     if (this.saxonArmy.length === 0) {
-        console.log("Vikings have won the war of the century!");
+        return "Vikings have won the war of the century!";
     } else if (this.vikingArmy.length === 0) {
-        console.log("Saxons have fought for their lives and survive another day...");
+        return "Saxons have fought for their lives and survive another day...";
     } else if (this.saxonArmy.length > 0 && this.vikingArmy.length > 0) {
-        console.log("Vikings and Saxons are still in the thick of battle.");
+        return "Vikings and Saxons are still in the thick of battle.";
     }
 };
